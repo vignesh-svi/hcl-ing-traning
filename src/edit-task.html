@@ -42,10 +42,10 @@
           ></iron-localstorage>
     <iron-form id="form4">
   <form action="/foo" method="get">
-    <paper-input name="tid" label="Ticket ID" value={{updatedata.tid::change}} required ></paper-input>
-    <paper-input name="des" label="Description" value={{description}} required min="0" max="100"></paper-input>
+    <paper-input name="tid" label="Ticket ID" value={{tid}} required ></paper-input>
+    <paper-input name="des" label="Description" value={{des}} required min="0" max="100"></paper-input>
     
-    <paper-input name="tdate" label="Date" value={{tdate}} required type="date"></paper-input>
+    <paper-input name="tdate" label="Date" value={{adate}} required type="date"></paper-input>
    
     <paper-dropdown-menu label="Select the Assignee"  required>
         <paper-listbox class="dropdown-content" slot="dropdown-content" attr-for-selected="value" selected="{{assni}}">
@@ -79,8 +79,14 @@
       constructor(){
         super();
         this.updatedata = JSON.parse(localStorage.getItem('editdata'))
+        console.log(this.updatedata)
+        this.tid = this.updatedata.tid;
+            this.des = this.updatedata.des;
+            this.adate = this.updatedata.date;
+            this.assni = this.updatedata.assni;
         
       }
+      
         update(){
             var tid = this.ticketId;
             var des = this.description;
