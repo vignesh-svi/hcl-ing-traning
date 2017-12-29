@@ -1,0 +1,105 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+<style is="custom-style" include="demo-pages-shared-styles">
+    
+  paper-dropdown-menu, paper-listbox {
+    width: 250px;
+  }
+  paper-dropdown-menu {
+    height: 200px;
+    margin: auto;
+    display: block;
+  }
+</style>
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="add-task">
+    
+        <template>
+            <style include="shared-styles">
+                #form3{ background: #fff; width: 100%; text-align: left }
+        #form3 .submit-btn { background: #4A148C; color: #fff; margin-top: 20px}
+        #form3 .reset-btn { background: #CE93D8;color: #fff;margin-top: 20px}
+        #form3 label{ text-align: left !important}
+        .card{ width: 40%; text-align: center; margin: 0px auto 0px auto; top:130px; position: relative}
+        paper-dropdown-menu, paper-listbox {
+    width: 100%;
+  }
+  
+    </style>
+        <div class="card">
+            <h2>Add Task</h2>
+    <iron-form id="form3">
+  <form action="/foo" method="get">
+    <paper-input name="tid" label="Ticket ID" value={{ticketId}} required pattern="[0-9]{6}" auto-validate error-message="Ticket ID shoud be 6 digit"><iron-icon icon="mail" prefix></iron-icon></paper-input>
+    <paper-input name="des" label="Description" value={{description}} required minlength="10" maxlength="100" auto-validate allowed-pattern="[a-zA-Z]" error-message="Description shoud be 10 to 100 characters" char-counter maxlength="100"></paper-input>
+    
+    <paper-input name="tdate" label="Date" value={{tdate}} required type="date" auto-validate error-message="Please assign a date for task"></paper-input>
+   
+    <paper-dropdown-menu label="Select the Assignee"  required auto-validate error-message="select a Assignee">
+        <paper-listbox class="dropdown-content" slot="dropdown-content" attr-for-selected="value" selected="{{assni}}">
+          <paper-item value="officier">Officier</paper-item>
+          <paper-item value="manager">Manager</paper-item>
+          <paper-item value="employee">Employee</paper-item>
+          <paper-item value="service">Service</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      
+
+    
+    
+     
+     
+    <paper-button raised on-click="add" class="submit-btn" >Add</paper-button>
+    <paper-button raised on-click="reset" class="reset-btn">Reset</paper-button>
+     
+  </form>
+  
+</iron-form>   
+        </div>   
+
+    </template>
+
+<script>
+
+    class AddTask extends Polymer.Element{
+
+        static get is() {return 'add-task'}
+
+        
+
+        add(){
+            var tid = this.ticketId;
+            var des = this.description;
+            var adate = this.tdate;
+            var assni = this.assni;
+
+            var taskcard = { 'tid': tid, 'des': des, 'adate':adate, 'assni':assni};
+
+// Put the object into storage
+
+            
+            if (typeof(Storage) !== "undefined") {
+   localStorage.setItem('taskcard', JSON.stringify(taskcard));
+   window.location.href="/task-page"
+} else {
+    alert("Sorry! No Web Storage support..")
+}
+            // window.history.pushState({},null,"/task-page");
+            // window.location.href="/task-page";
+        }
+
+    }
+    window.customElements.define(AddTask.is, AddTask);
+
+</script>
+
+</dom-module>
+

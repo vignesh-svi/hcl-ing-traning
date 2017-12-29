@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="login-page">
+    
+        <template>
+            <style include="shared-styles">
+                #form3{ background: #fff; width: 100%; text-align: left }
+        #form3 .submit-btn { background: #4A148C; color: #fff; margin-top: 20px}
+        #form3 .reset-btn { background: #CE93D8;color: #fff;margin-top: 20px}
+        #form3 label{ text-align: left !important}
+        .card{ width: 40%; text-align: center; margin: 0px auto 0px auto; top:130px; position: relative}
+    </style>
+        <div class="card">
+    <iron-form id="form3">
+  <form action="/foo" method="get">
+    <paper-input name="username" label="User Name"  required></paper-input>
+     <paper-input name="Password" label="Password" type="password" required></paper-input>
+     
+    <paper-button raised on-click="submit" class="submit-btn">Submit</paper-button>
+    <paper-button raised on-click="reset" class="reset-btn">Reset</paper-button>
+     
+  </form>
+  <div class="output"></div>
+</iron-form>   
+        </div>   
+
+    </template>
+
+<script>
+
+    class LoginPage extends Polymer.Element{
+
+        static get is() {return 'login-page'}
+
+        submit(){
+            window.history.pushState({},null,"/dash-board");
+            window.location.href="/dash-board";
+        }
+
+    }
+    window.customElements.define(LoginPage.is, LoginPage);
+
+</script>
+
+</dom-module>
+

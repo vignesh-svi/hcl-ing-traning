@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="dash-board">
+    
+        <template>
+            <style include="shared-styles">
+
+                form{
+    text-align: center;
+    padding: 100px;
+}
+.task-btn{ padding: 100px; background: #0D47A1;color: #fff}
+.officier-btn{padding: 100px; background: #2196F3; color: #fff}
+               
+    </style>
+        <div class="card">
+            <h2>Dashboard</h2>
+    <iron-form id="form3">
+  <form>
+    
+     
+    <paper-button raised on-click="task" class="task-btn">Task</paper-button>
+    <paper-button raised on-click="officier" class="officier-btn">Officier</paper-button>
+     
+  </form>
+  <div class="output"></div>
+</iron-form>   
+        </div>   
+
+    </template>
+
+<script>
+
+    class DashBoard extends Polymer.Element{
+
+        static get is() {return 'dash-board'}
+
+        task(){
+
+            window.location.href="/task-page"
+        }
+
+        officier(){
+
+            window.location.href="/officier-page"
+        }
+
+    }
+    window.customElements.define(DashBoard.is, DashBoard);
+
+</script>
+
+</dom-module>
+

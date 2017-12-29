@@ -1,0 +1,111 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+
+<style is="custom-style" include="demo-pages-shared-styles">
+  paper-dropdown-menu, paper-listbox {
+    width: 250px;
+  }
+  paper-dropdown-menu {
+    height: 200px;
+    margin: auto;
+    display: block;
+  }
+</style>
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="edit-task">
+    
+        <template>
+            <style include="shared-styles">
+                #form4{ background: #fff; width: 100%; text-align: left }
+        #form4 .submit-btn { background: #4A148C; color: #fff; margin-top: 20px}
+        #form4 .reset-btn { background: #CE93D8;color: #fff;margin-top: 20px}
+        #form4 label{ text-align: left !important}
+        .card{ width: 40%; text-align: center; margin: 0px auto 0px auto; top:130px; position: relative}
+        paper-dropdown-menu, paper-listbox {
+    width: 100%;
+  }
+  
+    </style>
+        <div class="card">
+            <h2>Edit Task</h2>
+            <iron-localstorage name="my-app-storage"
+            value="{{updatedata}}"
+            
+          ></iron-localstorage>
+    <iron-form id="form4">
+  <form action="/foo" method="get">
+    <paper-input name="tid" label="Ticket ID" value={{updatedata.tid::change}} required ></paper-input>
+    <paper-input name="des" label="Description" value={{description}} required min="0" max="100"></paper-input>
+    
+    <paper-input name="tdate" label="Date" value={{tdate}} required type="date"></paper-input>
+   
+    <paper-dropdown-menu label="Select the Assignee"  required>
+        <paper-listbox class="dropdown-content" slot="dropdown-content" attr-for-selected="value" selected="{{assni}}">
+          <paper-item value="officier">Officier</paper-item>
+          <paper-item value="manager">Manager</paper-item>
+          <paper-item value="employee">Employee</paper-item>
+          <paper-item value="service">Service</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      
+
+    
+    
+     
+     
+    <paper-button raised on-click="update" class="submit-btn">Update</paper-button>
+     
+  </form>
+  
+</iron-form>   
+        </div>   
+
+    </template>
+
+<script>
+
+    class EditTask extends Polymer.Element{
+
+        static get is() {return 'edit-task'}
+      constructor(){
+        super();
+        this.updatedata = JSON.parse(localStorage.getItem('editdata'))
+        
+      }
+        update(){
+            var tid = this.ticketId;
+            var des = this.description;
+            var adate = this.tdate;
+            var assni = this.assni;
+
+            var taskcard = { 'tid': tid, 'des': des, 'adate':adate, 'assni':assni};
+
+// Put the object into storage
+
+            
+            if (typeof(Storage) !== "undefined") {
+   localStorage.setItem('taskcard', JSON.stringify(taskcard));
+   window.location.href="/task-page"
+} else {
+    alert("Sorry! No Web Storage support..")
+}
+            // window.history.pushState({},null,"/task-page");
+            // window.location.href="/task-page";
+        }
+
+    }
+    window.customElements.define(EditTask.is, EditTask);
+
+</script>
+
+</dom-module>
+

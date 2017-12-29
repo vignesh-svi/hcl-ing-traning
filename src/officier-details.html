@@ -1,0 +1,96 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/bwt-datatable/bwt-datatable.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/bwt-datatable/bwt-datatable-card.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="officier-details">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+      .backButton{margin: 30px 30px}
+      paper-card{width:100%}
+    </style>
+
+<paper-card heading="Officier Deatils" >
+        <paper-datatable data="{{taskcard}}" selectable multi-selection>
+            <paper-datatable-column header="Ticket ID" property="tid"  sortable sorted></paper-datatable-column>
+           
+        
+        <paper-datatable-column header="Description" property="des" sortable ></paper-datatable-column>
+       
+  
+    <paper-datatable-column header="Date" property="adate" sortable ></paper-datatable-column>
+   
+
+<paper-datatable-column header="Assignee" property="assni" sortable > </paper-datatable-column>
+
+</paper-datatable>
+<paper-button rasied class="backButton" on-click="officier">Back to Officier page</paper-button>
+      </paper-card>
+  </template>
+
+  <script>
+    class OfficierDetails extends Polymer.Element {
+      static get is() { return 'officier-details'; }
+
+     
+    constructor(){
+
+          super();
+
+        var localCardid = JSON.parse(localStorage.getItem('clickedcard'))
+        
+    var localtaskid =localCardid.cardid;
+
+    
+
+          // var taskcard = [];
+          this.taskcard = [{tid:localtaskid,des:"This is very important", adate:"15/07/17",assni:"vignesh"},
+              {tid:localtaskid,des:"This is very important", adate:"15/07/17",assni:"vignesh"},
+              {tid:localtaskid,des:"This is very important", adate:"15/07/17",assni:"vignesh"}
+]
+//      this.taskcard.forEach(function(entry) {
+//     var taskid =entry.tid;
+
+//     if(localtaskid==taskid){
+     
+//       var selectedid = entry;
+//       var seleteddata = [];
+//       this.seleteddata.push(entry)
+      
+     
+//     }
+    
+// });
+
+//if(localtaskid==taskid){}
+
+    }
+    officier(){
+
+      window.location.href = "/officier-page"
+    }
+    
+    }
+    
+
+    window.customElements.define(OfficierDetails.is, OfficierDetails);
+  </script>
+</dom-module>

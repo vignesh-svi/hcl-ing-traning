@@ -1,0 +1,140 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+
+<dom-module id="task-page">
+    
+        <template>
+            <style include="shared-styles">
+                .cardnew{ width: 25%; display: inline-block}
+
+    iron-icon{ text-align: center;width: 100%;}
+    .addTask .card-content p{ text-align: center}
+               
+    </style>
+        <!--<iron-ajax
+            auto
+            url="../jsondata/tasklist.json"    
+            handle-as="json"
+            content-type="application/json"
+            on-response="_handleajaxResponse">
+            </iron-ajax>-->
+<iron-ajax 
+               auto
+               url = "https://jsonplaceholder.typicode.com/users" params="{'q':q}"
+               handle-as = "json" on-response = "handleResponse"
+               >
+            </iron-ajax>
+
+
+            <p>[[ajaxResponse]]</p>
+        <!--<div class="card">
+<p>[[ajaxResponse]]</p>
+    <div class="horizontal-section-container">
+        <template is="dom-repeat" items="[[ajaxResponse]]" as="tasklist">
+          <div class="horizontal-section">
+            <p>[[tasklist.colors.color]]</p>
+          </div>
+        </template>
+      </div>
+        </div>   -->
+        <h2>Task Details</h2>
+        <template is="dom-repeat" items="{{taskcard}}" as="titem" class="carddetails">
+            <div class="card cardnew" on-click="edittask">
+                <div class="title">
+                <h1>Ticket ID: {{titem.tid}}</h1>
+                </div>
+                <div class="details">
+                    <p><span>Description</span>: {{titem.des}}</p>
+                    <p><span>Date</span>: {{titem.adate}}</p>
+                     <p><span>Assignee</span>: {{titem.assni}}</p>
+                    
+                    
+
+                </div>
+
+            </div>
+        </template>
+        <paper-card class="addTask card cardnew" on-click="addnewtask">
+    <div class="card-content">
+      
+        
+          <iron-icon icon="add" class="add"></iron-icon>
+          <p>Add New Task</p>
+          
+        </div>
+      
+      
+    
+  </paper-card>
+
+<paper-button rasied class="backButton" on-click="dashboard">Back to dashboard</paper-button>
+
+    </template>
+
+<script>
+
+    class TaskPage extends Polymer.Element{
+
+        static get is() {return 'task-page'}
+        dashboard(){
+
+            window.history.pushState({},null,"/dash-board");
+            window.location.href = "/dash-board";
+        }
+
+        addnewtask(){
+
+            window.history.pushState({},null,"/add-task");
+            window.location.href = "/add-task";
+        }
+        edittask(e){
+            var editdata = e.model.titem;
+           localStorage.setItem('editdata',JSON.stringify(editdata))
+
+            window.location.href = "/edit-task"; 
+
+            
+
+        }
+        
+       handleResponse(event, request) {
+                     var responseme = request.response;
+                     console.log(responseme);
+                  }
+
+      constructor(){
+
+          super();
+          var taskcard = [];
+          this.taskcard = [{tid:1123,des:"This is very important", adate:150717,assni:"vignesh"},
+              {tid:1234,des:"This is very important", adate:150717,assni:"vignesh"},
+              {tid:1980,des:"This is very important", adate:150717,assni:"vignesh"}
+]
+
+
+
+
+
+var final = JSON.parse(localStorage.getItem('taskcard'))
+if(final)
+this.taskcard.push(final);
+          
+      }
+    
+    
+
+    }
+    window.customElements.define(TaskPage.is, TaskPage);
+
+</script>
+
+</dom-module>
+

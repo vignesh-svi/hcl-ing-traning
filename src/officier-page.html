@@ -1,0 +1,112 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="shared-styles.html">
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+
+<dom-module id="officier-page">
+    
+        <template>
+            <style include="shared-styles">
+                .cardnew{ width: 25%; display: inline-block}
+
+    iron-icon{ text-align: center;width: 100%;}
+    .addTask .card-content p{ text-align: center}
+               
+    </style>
+        <!--<iron-ajax
+            auto
+            url="../jsondata/tasklist.json"    
+            handle-as="json"
+            content-type="application/json"
+            on-response="_handleajaxResponse">
+            </iron-ajax>-->
+
+        <!--<div class="card">
+<p>[[ajaxResponse]]</p>
+    <div class="horizontal-section-container">
+        <template is="dom-repeat" items="[[ajaxResponse]]" as="tasklist">
+          <div class="horizontal-section">
+            <p>[[tasklist.colors.color]]</p>
+          </div>
+        </template>
+      </div>
+        </div>   -->
+        <h2>Officier Details Page</h2>
+        <template is="dom-repeat" items="{{taskcard}}" as="titem" class="carddetails" >
+            <div class="card cardnew"  on-click="viewdetails" id="{{titem.tid}}">
+                <div class="title">
+                <h1>Ticket ID: {{titem.tid}}</h1>
+                </div>
+                <div class="details">
+                    <p><span>Description</span>: {{titem.des}}</p>
+                    <p><span>Date</span>: {{titem.adate}}</p>
+                     <p><span>Assignee</span>: {{titem.assni}}</p>
+                    
+                    
+
+                </div>
+
+            </div>
+        </template>
+        
+
+<paper-button rasied class="backButton" on-click="dashboard">Back to dashboard</paper-button>
+
+    </template>
+
+<script>
+
+    class OfficierPage extends Polymer.Element{
+
+        static get is() {return 'officier-page'}
+        dashboard(){
+
+            window.history.pushState({},null,"/dash-board");
+            window.location.href = "/dash-board";
+        }
+
+       viewdetails(e) {
+           //debugger;
+    var cardid = e.model.titem.tid;
+     window.location.href = "/officier-details?cardid=" + cardid;
+     
+     var clickedcard = {cardid:cardid}
+     localStorage.setItem('clickedcard',JSON.stringify(clickedcard))
+    
+}
+
+
+
+    //    handleResponse(event, request) {
+    //                  var responseme = request.response;
+    //                  console.log(responseme);
+    //               }
+static get properties() {
+        return {
+
+taskcard: {
+            type: Array,
+            value() {
+              return [{tid:123400,des:"This is very important", adate:150717,assni:"vignesh"},
+              {tid:123459,des:"This is very important", adate:150717,assni:"vignesh"},
+              {tid:123456,des:"This is very important", adate:150717,assni:"vignesh"}
+]
+            }
+}
+        }
+      }
+       
+
+    }
+    window.customElements.define(OfficierPage.is, OfficierPage);
+
+</script>
+
+</dom-module>
+
